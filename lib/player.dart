@@ -203,16 +203,18 @@ class _SVGAImageState extends State<SVGAImage> {
           BoxConstraints.tight(widget.preferredSize!).constrain(viewBoxSize);
     }
     return IgnorePointer(
-      child: CustomPaint(
-        painter: _SVGAPainter(
-          // _SVGAPainter will auto repaint on _controller animating
-          widget._controller,
-          fit: widget.fit,
-          filterQuality: widget.filterQuality,
-          // default is allowing overflow for backward compatibility
-          clipRect: widget.allowDrawingOverflow == false,
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _SVGAPainter(
+            // _SVGAPainter will auto repaint on _controller animating
+            widget._controller,
+            fit: widget.fit,
+            filterQuality: widget.filterQuality,
+            // default is allowing overflow for backward compatibility
+            clipRect: widget.allowDrawingOverflow == false,
+          ),
+          size: preferredSize,
         ),
-        size: preferredSize,
       ),
     );
   }
